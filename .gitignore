@@ -1,0 +1,41 @@
+# ========== Global ==========
+node_modules/
+.env
+*.env.local
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.vscode/
+.idea/
+*.swp
+
+# ========== Frontend (Vite) ==========
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.vite/
+/frontend/.env
+/frontend/coverage/
+/frontend/public/local-*
+
+# ========== Backend (Node.js Native) ==========
+/backend/node_modules/
+/backend/.env
+/backend/logs/
+/backend/tmp/
+/backend/uploads/
+/backend/*.log
+/backend/*.pid
+/backend/.cache
+/backend/database.sqlite
+
+# ========== Optional ==========
+# If you’re using Docker
+docker-compose.override.yml
+*.local.yml
+.docker/
+
+# If you're using testing or coverage tools
+coverage/

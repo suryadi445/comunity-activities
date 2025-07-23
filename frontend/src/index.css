@@ -1,0 +1,16 @@
+/* Hilangkan efek focus */
+button[role="tab"]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Warna underline dan teks saat aktif */
+button[role="tab"][aria-selected="true"] {
+  border-color: #159ec9 !important;
+  color: #159ec9 !important;
+}
+
+/* Warna teks saat hover jika tidak aktif (opsional) */
+button[role="tab"]:not([aria-selected="true"]):hover {
+  color: #159ec9 !important;
+}
