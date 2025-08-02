@@ -158,6 +158,37 @@ const CashReports = {
             console.error("Error soft-deleting cash report:", error);
             throw error;
         }
+    },
+
+    async cashBalance(type, date) {
+        try {
+            let query = `
+            SELECT SUM(amount) AS total_amount
+            FROM cash_reports
+            WHERE deleted_at IS NULL
+            AND type = 'in'
+        `;
+            const values = [];
+            let paramIndex = 1;
+
+            if (type) {
+                query += ` AND type = $${paramIndex}`;
+                values.push(type);
+                paramIndex++;
+            }
+
+            if (date) {
+                query += ` AND TO_CHAR(date, 'YYYY-MM-DD') = $${paramIndex}`;
+                values.push(date);
+                paramIndex++;
+            }
+
+            const result = await pool.query(query, values);
+            return result.rows[0];
+        } catch (error) {
+            console.error("Error fetching cash balance:", error);
+            throw error;
+        }
     }
 };
 

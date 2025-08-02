@@ -43,7 +43,8 @@ const {
     getCashReports,
     createCashReports,
     updateCashReports,
-    deleteCashReports
+    deleteCashReports,
+    getCashBalance
 } = require("../controllers/CashReportController");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 
@@ -144,6 +145,8 @@ function handleRequest(req, res) {
         return updateCashReports(req, res);
     } else if (req.method === "DELETE" && url.pathname === "/api/cash-report") {
         return deleteCashReports(req, res);
+    } else if (req.method === "GET" && url.pathname === "/api/cash-balance") {
+        return getCashBalance(req, res);
     }
 
     // 404 Error Handling

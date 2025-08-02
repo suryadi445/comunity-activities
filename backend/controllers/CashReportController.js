@@ -5,6 +5,7 @@ const {
     getAllCashReports,
     editCashReport,
     deleteCashReportById,
+    cashBalance
 } = require("../models/cashReportModel");
 
 // Base Schema
@@ -124,9 +125,23 @@ const deleteCashReports = async (req, res) => {
     }
 };
 
+const getCashBalance = async (req, res) => {
+    const parsedUrl = url.parse(req.url, true);
+    const type = parsedUrl.query.type || "";
+    const date = parsedUrl.query.date || "";
+
+    try {
+        const response = await cashBalance(type, date);
+        return res.success(200, response);
+    } catch (error) {
+        return res.error(500, error.message);
+    }
+};
+
 module.exports = {
     getCashReports,
     createCashReports,
     updateCashReports,
-    deleteCashReports
+    deleteCashReports,
+    getCashBalance
 };
