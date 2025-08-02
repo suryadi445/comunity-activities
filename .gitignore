@@ -36,6 +36,14 @@ pnpm-debug.log*
 docker-compose.override.yml
 *.local.yml
 .docker/
+# ========== Docker Files ==========
+docker-compose.yml
+/frontend/Dockerfile
+/frontend/nginx.conf
+/backend/Dockerfile
 
 # If you're using testing or coverage tools
 coverage/
+
+# internal task
+Task.md
