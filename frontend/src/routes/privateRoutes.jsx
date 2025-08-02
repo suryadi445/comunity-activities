@@ -6,6 +6,7 @@ import Permission from "../pages/permissions";
 import Menu from "../pages/menu";
 import Settings from "../pages/settings";
 import Dashboard from "../pages/dashboard";
+import Cash from "../pages/cash/report";
 
 const privateRoutes = [
     { path: "logout", element: <Logout /> },
@@ -16,6 +17,7 @@ const privateRoutes = [
     { path: "permissions", element: <Permission /> },
     { path: "menus", element: <Menu /> },
     { path: "settings", element: <Settings /> },
+    { path: "cash-reports", element: <Cash /> },
 ];
 
 export default privateRoutes;
