@@ -305,7 +305,7 @@ function Users() {
                         <Row cols={2} className="mt-3">
                             <div className="mt-3">
                                 <Label htmlFor="password" className="text-sm font-medium text-black dark:text-black">Password</Label>
-                                <div className="relative">
+                                <div className="relative mt-1">
                                     <TextInput
                                         id="password"
                                         name="password"
@@ -317,6 +317,7 @@ function Users() {
                                             color: "black",
                                             border: "1px solid #D1D5DB",
                                             borderRadius: "0.375rem",
+                                            padding: "2.8% 0%",
                                         }}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
