@@ -7,12 +7,7 @@ const TextareaLabel = ({
     required = false,
     placeholder = "",
     rows = 4,
-    style = {
-        backgroundColor: "white",
-        color: "black",
-        border: "1px solid #D1D5DB",
-        borderRadius: "0.375rem",
-    },
+    disabled = false,
     onChange,
     value
 }) => {
@@ -23,8 +18,8 @@ const TextareaLabel = ({
                 prop={prop}
                 required={required}
                 placeholder={placeholder}
+                disabled={disabled}
                 rows={rows}
-                style={style}
                 onChange={onChange}
                 value={value}
             />

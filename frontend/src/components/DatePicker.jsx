@@ -3,11 +3,12 @@ import { Datepicker } from "flowbite-react";
 const DatepickerComponent = ({
     prop = "",
     required = false,
+    disabled = false,
     onChange,
     value,
     style = {
-        backgroundColor: "white",
-        color: "black",
+        backgroundColor: disabled ? "#D1D5DB" : "white",
+        color: value ? "black" : "#D1D5DB",
         border: "1px solid #D1D5DB",
         borderRadius: "0.375rem",
     },
@@ -32,6 +33,7 @@ const DatepickerComponent = ({
                 style={style}
                 onChange={onChange}
                 value={initialDate}
+                disabled={disabled}
                 placeholder={placeholder} />
         </div>
     );

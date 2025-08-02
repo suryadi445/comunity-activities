@@ -8,13 +8,8 @@ const InputLabel = ({
     type = "text",
     required = false,
     placeholder = "",
+    disabled = false,
     helpText = "PNG, JPG or JPEG",
-    style = {
-        backgroundColor: "white",
-        color: "black",
-        border: "1px solid #D1D5DB",
-        borderRadius: "0.375rem",
-    },
     onChange,
 }) => {
     {/* Input File */ }
@@ -30,6 +25,7 @@ const InputLabel = ({
                     name={prop}
                     onChange={onChange}
                     type="file"
+                    disabled={disabled}
                     className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none"
                     aria-describedby={`${prop}_help`}
                 />
@@ -55,7 +51,7 @@ const InputLabel = ({
                 value={value}
                 required={required}
                 placeholder={placeholder}
-                style={style}
+                disabled={disabled}
                 onChange={onChange}
             />
         </div>

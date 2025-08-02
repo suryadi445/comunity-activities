@@ -2,11 +2,12 @@ const TextareaComponent = ({
     prop,
     required = false,
     placeholder = "",
+    disabled = false,
     rows = 4,
     onChange,
     value,
     style = {
-        backgroundColor: "white",
+        backgroundColor: disabled ? "#D1D5DB" : "white",
         color: "black",
         border: "1px solid #D1D5DB",
         borderRadius: "0.375rem",
@@ -19,6 +20,7 @@ const TextareaComponent = ({
             rows={rows}
             required={required}
             placeholder={placeholder}
+            disabled={disabled}
             style={style}
             onChange={onChange}
             value={value}

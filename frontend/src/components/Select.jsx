@@ -57,6 +57,7 @@ const SelectComponent = ({
                         color: disabled ? '#9CA3AF' : style.color,
                         border: style.border,
                         borderRadius: style.borderRadius,
+                        padding: '0.9% 0%',
                         cursor: disabled ? 'not-allowed' : 'default',
                         '&:hover': {
                             borderColor: disabled ? provided.borderColor : '#2563EB',

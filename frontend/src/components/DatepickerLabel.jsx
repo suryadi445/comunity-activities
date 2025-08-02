@@ -4,6 +4,7 @@ import DatePicker from './DatePicker';
 const DatepickerLabel = ({
     label,
     prop = "",
+    disabled = false,
     required = false,
     onChange,
     value
@@ -15,6 +16,7 @@ const DatepickerLabel = ({
             )}
             <DatePicker
                 prop={prop}
+                disabled={disabled}
                 required={required}
                 onChange={onChange}
                 value={value}
