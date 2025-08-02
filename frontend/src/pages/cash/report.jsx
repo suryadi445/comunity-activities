@@ -11,6 +11,7 @@ import { toastError, toastSuccess } from "../../components/Toast";
 import api from "../../config/axiosConfig";
 import Loading from "../../components/Loading";
 import formatRupiah from "../../utils/formatRupiah";
+import { HiRefresh } from "react-icons/hi";
 
 const Cash = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,7 @@ const Cash = () => {
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [dateFilter, setDateFilter] = useState(null);
     const [typeFilter, setTypeFilter] = useState('');
+    const [cashBalance, setCashBalance] = useState(0);
 
     const columns = [
         { key: "type", label: "type" },
@@ -199,6 +201,27 @@ const Cash = () => {
         }
     };
 
+    const fetchCashBalance = async () => {
+        let date = dateFilter || "";
+
+        try {
+            const res = await api.get(`/api/cash-balance?type=${typeFilter}&date=${date}`);
+            setCashBalance(res.data.response.total_amount);
+        } catch (error) {
+            toastError(error);
+        }
+    }
+
+    const handleReload = () => {
+        setTypeFilter('');
+        setDateFilter('');
+        setRefreshTrigger(prev => prev + 1);
+    }
+
+    useEffect(() => {
+        fetchCashBalance();
+    }, [refreshTrigger]);
+
     return (
         <div>
             <main>
@@ -215,6 +238,15 @@ const Cash = () => {
                     inputSearch={false}
                     filter={filter}
                 />
+
+                <Row>
+                    <div className="flex items-center gap-2">
+                        <h2 className="m-0">
+                            Cash Balance: {formatRupiah(cashBalance)}
+                        </h2>
+                        <HiRefresh size={20} className="text-orange-500 cursor-pointer" onClick={handleReload} />
+                    </div>
+                </Row>
 
                 <Row>
                     <TableComponent
