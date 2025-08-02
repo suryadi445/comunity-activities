@@ -39,6 +39,12 @@ const {
     getSettingsApps,
     updateSettingsApps,
 } = require("../controllers/SettingsController");
+const {
+    getCashReports,
+    createCashReports,
+    updateCashReports,
+    deleteCashReports
+} = require("../controllers/CashReportController");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 
 function handleRequest(req, res) {
@@ -122,10 +128,22 @@ function handleRequest(req, res) {
         return deleteRolePermissions(req, res);
     }
 
+    //   Settings Routes
     if (req.method === "GET" && url.pathname === "/api/settings-apps") {
         return getSettingsApps(req, res);
     } else if (req.method === "PUT" && url.pathname === "/api/settings-apps") {
         return updateSettingsApps(req, res);
+    }
+
+    // cash Reports
+    if (req.method === "GET" && url.pathname === "/api/cash-reports") {
+        return getCashReports(req, res);
+    } else if (req.method === "POST" && url.pathname === "/api/cash-report") {
+        return createCashReports(req, res);
+    } else if (req.method === "PUT" && url.pathname === "/api/cash-report") {
+        return updateCashReports(req, res);
+    } else if (req.method === "DELETE" && url.pathname === "/api/cash-report") {
+        return deleteCashReports(req, res);
     }
 
     // 404 Error Handling
