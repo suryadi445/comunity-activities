@@ -5,11 +5,11 @@
 exports.seed = async function (knex) {
     // Hapus data lama dulu
     await knex("menus").del();
+    await knex.raw("ALTER SEQUENCE menus_id_seq RESTART WITH 1");
 
     // Insert data menu
     await knex("menus").insert([
         {
-            id: 1,
             name: "Dashboard",
             icon: "FaLaptopHouse",
             route: "/dashboard",
@@ -18,7 +18,6 @@ exports.seed = async function (knex) {
             is_active: true,
         },
         {
-            id: 2,
             name: "Users",
             icon: "FaUsers",
             route: "/users",
@@ -27,7 +26,6 @@ exports.seed = async function (knex) {
             is_active: true,
         },
         {
-            id: 3,
             name: "Roles",
             icon: "FaShieldAlt",
             route: "/roles",
@@ -36,7 +34,6 @@ exports.seed = async function (knex) {
             is_active: true,
         },
         {
-            id: 4,
             name: "Permissions",
             icon: "FaKey",
             route: "/permissions",
@@ -45,7 +42,6 @@ exports.seed = async function (knex) {
             is_active: true,
         },
         {
-            id: 5,
             name: "Settings",
             icon: "FaCog",
             route: "/settings",
@@ -54,12 +50,19 @@ exports.seed = async function (knex) {
             is_active: true,
         },
         {
-            id: 6,
             name: "Menus",
             icon: "FaListUl",
             route: "/menus",
             parent_id: null,
             sort_order: 6,
+            is_active: true,
+        },
+        {
+            name: "Cash Report",
+            icon: "FaMoneyBillWave",
+            route: "/cash-reports",
+            parent_id: null,
+            sort_order: 7,
             is_active: true,
         },
     ]);

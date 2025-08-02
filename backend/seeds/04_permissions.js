@@ -5,6 +5,7 @@
 exports.seed = async function (knex) {
     // Kosongkan tabel permissions
     await knex("permissions").del();
+    await knex.raw("ALTER SEQUENCE permissions_id_seq RESTART WITH 1");
 
     // Tambahkan data CRUD permissions
     await knex("permissions").insert([
