@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import Loading from "./components/Loading";
 import RequireAuth from "./components/RequireAuth";
 import TrackLastPath from "./components/TrackLastPath";
+import NotFound from "../src/pages/404";
 
 function App() {
     const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +34,9 @@ function App() {
                         />
                     ))}
                 </Route>
+
+                {/* 404 Not Found Page */}
+                <Route path="*" element={<NotFound fullPage />} />
             </Routes>
         </Router>
     );
