@@ -7,6 +7,7 @@ import Menu from "../pages/menu";
 import Settings from "../pages/settings";
 import Dashboard from "../pages/dashboard";
 import Cash from "../pages/cash/report";
+import Activities from "../pages/activities";
 
 const privateRoutes = [
     { path: "logout", element: <Logout /> },
@@ -18,6 +19,7 @@ const privateRoutes = [
     { path: "menus", element: <Menu /> },
     { path: "settings", element: <Settings /> },
     { path: "cash-reports", element: <Cash /> },
+    { path: "activities", element: <Activities /> },
 ];
 
 export default privateRoutes;

@@ -46,6 +46,15 @@ const {
     deleteCashReports,
     getCashBalance
 } = require("../controllers/CashReportController");
+const {
+    getActivity,
+    createActivity,
+    updateActivity,
+    deleteActivity,
+    getImagesActivity,
+    createImagesActivity,
+    deleteImagesActivity
+} = require("../controllers/ActivityController");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 
 function handleRequest(req, res) {
@@ -147,6 +156,26 @@ function handleRequest(req, res) {
         return deleteCashReports(req, res);
     } else if (req.method === "GET" && url.pathname === "/api/cash-balance") {
         return getCashBalance(req, res);
+    }
+
+    // activities
+    if (req.method === "GET" && url.pathname === "/api/activities") {
+        return getActivity(req, res);
+    } else if (req.method === "POST" && url.pathname === "/api/activity") {
+        return createActivity(req, res);
+    } else if (req.method === "PUT" && url.pathname === "/api/activity") {
+        return updateActivity(req, res);
+    } else if (req.method === "DELETE" && url.pathname === "/api/activity") {
+        return deleteActivity(req, res);
+    }
+
+    // images activity
+    if (req.method === "GET" && url.pathname === "/api/images-activity") {
+        return getImagesActivity(req, res);
+    } else if (req.method === "POST" && url.pathname === "/api/images-activity") {
+        return createImagesActivity(req, res);
+    } else if (req.method === "DELETE" && url.pathname === "/api/images-activity") {
+        return deleteImagesActivity(req, res);
     }
 
     // 404 Error Handling

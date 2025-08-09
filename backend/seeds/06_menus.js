@@ -65,5 +65,21 @@ exports.seed = async function (knex) {
             sort_order: 7,
             is_active: true,
         },
+        {
+            name: "Activities",
+            icon: "FaChalkboardTeacher",
+            route: "/activities",
+            parent_id: null,
+            sort_order: 8,
+            is_active: true,
+        },
+        {
+            name: "Landing Page",
+            icon: "FaImages",
+            route: "/landing-page",
+            parent_id: null,
+            sort_order: 9,
+            is_active: true,
+        },
     ]);
 };

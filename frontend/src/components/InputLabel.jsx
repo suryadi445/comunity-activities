@@ -11,6 +11,7 @@ const InputLabel = ({
     disabled = false,
     helpText = "PNG, JPG or JPEG",
     onChange,
+    multiple = false
 }) => {
     {/* Input File */ }
     if (type === "file") {
@@ -26,6 +27,8 @@ const InputLabel = ({
                     onChange={onChange}
                     type="file"
                     disabled={disabled}
+                    accept="image/png, image/jpeg, image/jpg"
+                    multiple={multiple}
                     className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none"
                     aria-describedby={`${prop}_help`}
                 />
