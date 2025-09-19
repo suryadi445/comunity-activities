@@ -163,11 +163,13 @@ const CashReports = {
     async cashBalance(type, date) {
         try {
             let query = `
-            SELECT SUM(amount) AS total_amount
+            SELECT 
+                COALESCE(SUM(CASE WHEN type = 'in' THEN amount ELSE 0 END), 0) -
+                COALESCE(SUM(CASE WHEN type = 'out' THEN amount ELSE 0 END), 0) 
+                AS total_amount
             FROM cash_reports
             WHERE deleted_at IS NULL
-            AND type = 'in'
-        `;
+            `;
             const values = [];
             let paramIndex = 1;
 
