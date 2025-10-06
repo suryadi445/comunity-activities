@@ -8,6 +8,7 @@ exports.up = function (knex) {
         table.string("title", 255).notNullable();
         table.text("description").nullable();
         table.date("activity_date").notNullable();
+        table.time("activity_time").notNullable();
         table.string("location", 255).nullable();
         table.uuid("created_by").references("id").inTable("users").onDelete("SET NULL");
         table.timestamps(true, true);

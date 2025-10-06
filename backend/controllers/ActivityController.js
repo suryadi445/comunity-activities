@@ -36,6 +36,14 @@ const activitySchema = Joi.object({
         "string.base": "Location must be a string.",
         "string.max": "Location must not exceed 255 characters.",
     }),
+    activity_time: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required()
+        .messages({
+            "any.required": "Activity time is required.",
+            "string.empty": "Activity time cannot be empty.",
+            "string.pattern.base": "Activity time must be in 24-hour format (HH:MM).",
+        }),
 });
 
 const getActivity = async (req, res) => {
@@ -62,10 +70,13 @@ const createActivity = async (req, res) => {
             return res.error(422, messages);
         }
 
-        const { title, activity_date, description, location } = value;
+        const { title, activity_date, activity_time, description, location } = value;
         const created_by = req.user.id;
 
-        const response = await insertActivity(title, activity_date, description, location, created_by);
+        console.log(activity_time);
+
+
+        const response = await insertActivity(title, activity_date, activity_time, description, location, created_by);
         return res.success(201, response);
     } catch (error) {
         console.error(error);
@@ -81,9 +92,9 @@ const updateActivity = async (req, res) => {
             return res.error(422, messages);
         }
 
-        const { id, title, activity_date, description, location } = value;
+        const { id, title, activity_date, activity_time, description, location } = value;
 
-        const response = await editActivity(id, title, activity_date, description, location);
+        const response = await editActivity(id, title, activity_date, activity_time, description, location);
         return res.success(200, response);
     } catch (error) {
         console.error(error);

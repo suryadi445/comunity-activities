@@ -22,6 +22,7 @@ const Actifity = {
                 SELECT 
                     id,
                     TO_CHAR(activity_date, 'YYYY-MM-DD') AS activity_date,
+                    TO_CHAR(activity_time, 'HH24:MI') AS activity_time,
                     description,
                     location,
                     title
@@ -55,6 +56,7 @@ const Actifity = {
                     `SELECT 
                         id,
                         TO_CHAR(activity_date, 'YYYY-MM-DD') AS activity_date,
+                        TO_CHAR(activity_time, 'HH24:MI') AS activity_time,
                         description,
                         location,
                         title
@@ -104,26 +106,11 @@ const Actifity = {
         }
     },
 
-    async updateActivity(id, title, activity_date, description, location) {
-        console.log(id, title, activity_date, description, location);
-
+    async insertActivity(title, activity_date, activity_time, description, location, created_by) {
         try {
             const result = await pool.query(
-                `UPDATE activities SET title = $1, activity_date = $2, description = $3, location = $4 WHERE id = $5 RETURNING *`,
-                [title, activity_date, description, location, id]
-            );
-            return result.rows[0];
-        } catch (error) {
-            console.error("Error updating activity:", error);
-            throw error;
-        }
-    },
-
-    async insertActivity(title, activity_date, description, location, created_by) {
-        try {
-            const result = await pool.query(
-                `INSERT INTO activities (title, activity_date, description, location, created_by) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-                [title, activity_date, description, location, created_by]
+                `INSERT INTO activities (title, activity_date,activity_time, description, location, created_by) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+                [title, activity_date, activity_time, description, location, created_by]
             );
             return result.rows[0];
         } catch (error) {
@@ -132,11 +119,11 @@ const Actifity = {
         }
     },
 
-    async editActivity(id, title, activity_date, description, location) {
+    async editActivity(id, title, activity_date, activity_time, description, location) {
         try {
             const result = await pool.query(
-                `UPDATE activities SET title = $1, activity_date = $2, description = $3, location = $4 WHERE id = $5 RETURNING *`,
-                [title, activity_date, description, location, id]
+                `UPDATE activities SET title = $1, activity_date = $2, activity_time = $3, description = $4, location = $5 WHERE id = $6 RETURNING *`,
+                [title, activity_date, activity_time, description, location, id]
             );
             return result.rows[0];
         } catch (error) {
@@ -152,6 +139,7 @@ const Actifity = {
                     a.id,
                     a.title,
                     TO_CHAR(a.activity_date, 'YYYY-MM-DD') AS activity_date,
+                    TO_CHAR(a.activity_time, 'HH24:MI') AS activity_time,
                     a.description,
                     a.location,
                     MAX(ai.path) AS path,

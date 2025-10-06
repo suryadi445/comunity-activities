@@ -21,6 +21,7 @@ const Activities = () => {
     const [activityId, setActivityId] = useState("");
     const [title, setTitle] = useState("");
     const [activityDate, setActivityDate] = useState("");
+    const [activityTime, setActivityTime] = useState("");
     const [location, setLocation] = useState("");
     const [description, setDescription] = useState("");
     const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -43,6 +44,7 @@ const Activities = () => {
     const columnsActivity = [
         { key: "title", label: "Title" },
         { key: "activity_date", label: "Activity Date" },
+        { key: "activity_time", label: "Activity Time" },
         { key: "description", label: "Description" },
         { key: "location", label: "Location" },
     ];
@@ -55,6 +57,7 @@ const Activities = () => {
         setActivityDate("");
         setLocation("");
         setDescription("");
+        setActivityTime("")
     };
 
     const fetchDataActivity = useCallback(async (page, limit) => {
@@ -76,10 +79,15 @@ const Activities = () => {
     }, [refreshTrigger]);
 
     const handleSubmitActivity = async () => {
+        if (!title || !activityDate || !activityTime || !description || !location) {
+            toastError("Please fill all required input.");
+            return false;
+        }
         try {
             const response = await api.post("/api/activity", {
                 title,
                 activity_date: activityDate,
+                activity_time: activityTime,
                 description,
                 location,
             });
@@ -102,6 +110,7 @@ const Activities = () => {
         setIsEditMode(true);
         setTitle(e.title);
         setActivityDate(formatDate(e.activity_date));
+        setActivityTime(e.activity_time)
         setLocation(e.location);
         setDescription(e.description);
         setActivityId(e.id);
@@ -109,11 +118,17 @@ const Activities = () => {
 
     const handleSubmitEditActivity = async () => {
 
+        if (!title || !activityDate || !activityTime || !description || !location) {
+            toastError("Please fill all required input.");
+            return false;
+        }
+
         try {
             const response = await api.put(`/api/activity`, {
                 id: activityId,
                 title,
                 activity_date: activityDate,
+                activity_time: activityTime,
                 description,
                 location,
             });
@@ -153,6 +168,7 @@ const Activities = () => {
     const columnsImages = [
         { key: "title", label: "Title" },
         { key: "activity_date", label: "Activity Date" },
+        { key: "activity_time", label: "Activity Time" },
         { key: "description", label: "Description" },
         { key: "location", label: "Location" },
     ]
@@ -366,27 +382,41 @@ const Activities = () => {
                         prop="title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        required={true}
                         placeholder="Enter Title"
                     />
-                    <DatepickerLabel
-                        label="Activity Date"
-                        prop="activity_date"
-                        value={activityDate}
-                        onChange={(e) => setActivityDate(formatDate(e))}
-                    />
-                </Row>
-                <Row cols={2}>
                     <InputLabel
                         label="Location"
                         prop="location"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
+                        required={true}
                         placeholder="Enter Location"
                     />
+                </Row>
+                <Row cols={2}>
+                    <DatepickerLabel
+                        label="Activity Date"
+                        prop="activity_date"
+                        required={true}
+                        value={activityDate}
+                        onChange={(e) => setActivityDate(formatDate(e))}
+                    />
+                    <InputLabel
+                        label="Activity Time"
+                        prop="activity_time"
+                        required={true}
+                        type="time"
+                        value={activityTime}
+                        onChange={(e) => setActivityTime(e.target.value)}
+                    />
+                </Row>
+                <Row>
                     <TextareaLabel
                         label="Description"
                         prop="description"
                         placeholder="Enter Description"
+                        required={true}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
