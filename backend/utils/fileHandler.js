@@ -2,6 +2,7 @@
 const path = require("path");
 const fs = require("fs");
 const uuidv4 = require("uuid").v4;
+const formidable = require("formidable");
 
 // Allowed mimetypes
 const allowedMimeTypes = {
@@ -86,7 +87,7 @@ const validateFile = (file, type = "all") => {
 };
 
 // Move and rename file
-const moveUploadedFile = (file, targetDir) => {
+const moveUploadedFile = (file, targetDir, oldFile = null) => {
     const fileExtension = path.extname(file.originalFilename);
     const newFileName = `${Date.now()}-${uuidv4()}${fileExtension}`;
     const newPath = path.join(targetDir, newFileName);
@@ -99,7 +100,77 @@ const moveUploadedFile = (file, targetDir) => {
     };
 };
 
+const parseRequest = (req) => {
+    return new Promise((resolve, reject) => {
+        const contentType = req.headers["content-type"] || "";
+
+        if (contentType.includes("application/json")) {
+            // JSON
+            try {
+                const data = req.body;
+                resolve({ fields: data, files: {} });
+            } catch (err) {
+                reject(err);
+            }
+        } else if (contentType.includes("multipart/form-data")) {
+            // multipart
+            const form = new formidable.IncomingForm();
+            form.uploadDir = path.join(__dirname, "../uploads/images");
+            form.keepExtensions = true;
+
+            if (!fs.existsSync(form.uploadDir)) {
+                fs.mkdirSync(form.uploadDir, { recursive: true });
+            }
+
+            form.parse(req, async (err, fields, files) => {
+                if (err) {
+                    console.log("error parse", err);
+                    return res.error(500, "Form parsing error");
+                }
+
+                const getField = (field) => (Array.isArray(field) ? field[0] : field);
+                const data = getField(fields);
+
+                const imageFile = files.image;
+
+                let imageName = null;
+                if (imageFile) {
+                    const file = Array.isArray(imageFile) ? imageFile[0] : imageFile;
+
+                    const { valid, error } = validateFile(file, "image");
+                    if (!valid) {
+                        return res.error(400, error);
+                    }
+
+                    // Move file
+                    const result = moveUploadedFile(file, form.uploadDir);
+                    if (!result) {
+                        return res.error(500, "Failed to move file");
+                    }
+
+                    imageName = result.newFileName;
+                }
+
+                for (const key in data) {
+                    if (Array.isArray(fields[key])) {
+                        fields[key] = fields[key][0];
+                    }
+                }
+
+                resolve({ fields, imageName });
+            });
+        } else {
+            // fallback
+            let body = "";
+            req.on("data", chunk => body += chunk);
+            req.on("end", () => resolve({ fields: { raw: body }, files: {} }));
+        }
+    });
+};
+
+
 module.exports = {
     validateFile,
     moveUploadedFile,
+    parseRequest,
 };
