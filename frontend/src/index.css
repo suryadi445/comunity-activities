@@ -1,16 +1,63 @@
 /* Hilangkan efek focus */
 button[role="tab"]:focus {
-  outline: none !important;
-  box-shadow: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 /* Warna underline dan teks saat aktif */
 button[role="tab"][aria-selected="true"] {
-  border-color: #159ec9 !important;
-  color: #159ec9 !important;
+    border-color: #159ec9 !important;
+    color: #159ec9 !important;
 }
 
 /* Warna teks saat hover jika tidak aktif (opsional) */
 button[role="tab"]:not([aria-selected="true"]):hover {
-  color: #159ec9 !important;
+    color: #159ec9 !important;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+        color: #dc2626;
+    }
+
+    25% {
+        opacity: 0.9;
+        color: #9333ea;
+    }
+
+    50% {
+        opacity: 0.7;
+        color: #059669;
+    }
+
+    75% {
+        opacity: 0.9;
+        color: #2563eb;
+    }
+
+    100% {
+        opacity: 1;
+        color: #059669;
+    }
+}
+
+.animate-blink {
+    animation: blink 10s infinite ease-in-out;
+}
+
+.animate-marquee {
+    display: inline-block;
+    animation: marquee 15s linear infinite;
+    text-shadow: 0 0 4px rgba(79, 70, 229, 0.3);
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }

@@ -52,9 +52,25 @@ const {
     updateActivity,
     deleteActivity,
     getImagesActivity,
+    getImagesActivityById,
     createImagesActivity,
     deleteImagesActivity
 } = require("../controllers/ActivityController");
+const {
+    getLandingPage,
+    getLandingPageType,
+    updateLandingPage,
+    updateLandingPageStructure,
+} = require("../controllers/LandingPageController");
+const {
+    createFeedback
+} = require("../controllers/FeedbackController")
+const {
+    getAnnouncement,
+    createAnnouncement,
+    updateAnnouncement,
+    deleteAnnouncement,
+} = require("../controllers/AnnouncementController");
 const { successResponse, errorResponse } = require("../helpers/responseHelper");
 
 function handleRequest(req, res) {
@@ -172,12 +188,40 @@ function handleRequest(req, res) {
     // images activity
     if (req.method === "GET" && url.pathname === "/api/images-activity") {
         return getImagesActivity(req, res);
+    } else if (req.method === "GET" && url.pathname === "/api/images-activity-by-id") {
+        return getImagesActivityById(req, res);
     } else if (req.method === "POST" && url.pathname === "/api/images-activity") {
         return createImagesActivity(req, res);
     } else if (req.method === "DELETE" && url.pathname === "/api/images-activity") {
         return deleteImagesActivity(req, res);
     }
 
+    // landing page
+    if (req.method === "GET" && url.pathname === "/api/landing-page") {
+        return getLandingPage(req, res);
+    } else if (req.method === "GET" && url.pathname === "/api/landing-page-type") {
+        return getLandingPageType(req, res);
+    } else if (req.method === "PUT" && url.pathname === "/api/landing-page") {
+        return updateLandingPage(req, res);
+    } else if (req.method === "PUT" && url.pathname === "/api/landing-page-structure") {
+        return updateLandingPageStructure(req, res)
+    }
+
+    // feedback
+    if (req.method === 'POST' && url.pathname === "/api/feedback") {
+        return createFeedback(req, res);
+    }
+
+    // announcement
+    if (req.method === "GET" && url.pathname === "/api/announcement") {
+        return getAnnouncement(req, res);
+    } else if (req.method === "POST" && url.pathname === "/api/announcement") {
+        return createAnnouncement(req, res);
+    } else if (req.method === "PUT" && url.pathname === "/api/announcement") {
+        return updateAnnouncement(req, res)
+    } else if (req.method === "DELETE" && url.pathname === "/api/announcement") {
+        return deleteAnnouncement(req, res)
+    }
     // 404 Error Handling
     console.log(`404 Not Found: ${req.method} ${url.pathname}`);
     res.writeHead(404, { "Content-Type": "application/json" });

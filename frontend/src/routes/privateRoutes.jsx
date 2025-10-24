@@ -8,6 +8,8 @@ import Settings from "../pages/settings";
 import Dashboard from "../pages/dashboard";
 import Cash from "../pages/cash/report";
 import Activities from "../pages/activities";
+import Announcement from "../pages/announcement";
+import Landing from "../pages/landing/landing-page";
 
 const privateRoutes = [
     { path: "logout", element: <Logout /> },
@@ -20,6 +22,8 @@ const privateRoutes = [
     { path: "settings", element: <Settings /> },
     { path: "cash-reports", element: <Cash /> },
     { path: "activities", element: <Activities /> },
+    { path: "announcement", element: <Announcement /> },
+    { path: "landing-page", element: <Landing /> },
 ];
 
 export default privateRoutes;
