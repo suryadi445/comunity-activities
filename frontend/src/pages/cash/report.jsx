@@ -112,6 +112,11 @@ const Cash = () => {
     };
 
     const handleSubmit = async () => {
+        if (!category || !date || !amount || !type || !description) {
+            toastError("Please fill all required input.");
+            return false;
+        }
+
         setLoading(true);
         try {
             const response = await api.post("/api/cash-report", {
@@ -152,6 +157,11 @@ const Cash = () => {
     };
 
     const handleSubmitEdit = async () => {
+        if (!category || !date || !amount || !type || !description) {
+            toastError("Please fill all required input.");
+            return false;
+        }
+
         try {
             const response = await api.put("/api/cash-report", {
                 id,
@@ -264,9 +274,10 @@ const Cash = () => {
             <Modal size="max-w-xl" isOpen={isModalOpen} title={isEditMode ? "Edit Cash Report" : "Add Cash Report"} onClose={() => setIsModalOpen(false)} onAccept={isEditMode ? handleSubmitEdit : handleSubmit}>
                 <form>
                     <Row cols={2}>
-                        <SelectLabel label="Type" prop="type" options={[{ label: "In", value: "in" }, { label: "Out", value: "out" }]} onChange={(e) => setType(e.target.value)} value={type} />
+                        <SelectLabel label="Type" required={true} prop="type" options={[{ label: "In", value: "in" }, { label: "Out", value: "out" }]} onChange={(e) => setType(e.target.value)} value={type} />
 
                         <DatepickerLabel
+                            required={true}
                             prop="date"
                             label="Date"
                             onChange={(e) => setDate(formatDate(e))}
@@ -275,16 +286,16 @@ const Cash = () => {
                     </Row>
 
                     <Row cols={2} className="mt-2">
-                        <InputLabel label="Amount" prop="amount" type="text" placeholder="100000" onChange={(e) => {
+                        <InputLabel label="Amount" prop="amount" required={true} type="text" placeholder="100000" onChange={(e) => {
                             const rawValue = e.target.value.replace(/[^0-9]/g, '');
                             setAmount(formatRupiah(rawValue));
                         }} value={amount} />
 
-                        <InputLabel label="Category" prop="category" placeholder="Donation, event, zakat" onChange={(e) => setCategory(e.target.value)} value={category} />
+                        <InputLabel label="Category" prop="category" required={true} placeholder="Donation, event, zakat" onChange={(e) => setCategory(e.target.value)} value={category} />
                     </Row>
 
                     <Row className="mt-2">
-                        <TextareaLabel label="Description" prop="description" placeholder="Receive donation from fulan" onChange={(e) => setDescription(e.target.value)} value={description} />
+                        <TextareaLabel label="Description" required={true} prop="description" placeholder="Receive donation from fulan" onChange={(e) => setDescription(e.target.value)} value={description} />
                     </Row>
                 </form>
             </Modal>

@@ -458,6 +458,12 @@ export default function Landing() {
     */
     // update structure organization
     const handleUpdateStructure = async () => {
+
+        if (!leaderTitle || !leaderName || !leaderPhone) {
+            toastError("Please fill in all required fields.");
+            return false;
+        }
+
         const formData = new FormData();
 
         formData.append("type", modalType);
@@ -553,6 +559,12 @@ export default function Landing() {
 
     // footer update action
     const handleUpdateFooter = async () => {
+
+        if (!footerLatitude || !footerLongitude || !footerFooter) {
+            toastError("Please fill in all required fields.");
+            return false;
+        }
+
         const payload = {
             type: modalType,
             latitude: footerLatitude,
@@ -1592,6 +1604,7 @@ export default function Landing() {
                             <InputLabel
                                 label="Header"
                                 prop="header"
+                                required
                                 placeholder="Header"
                                 value={headerSlideshow}
                                 onChange={(e) => setHeaderSlideshow(e.target.value)}
@@ -1600,6 +1613,7 @@ export default function Landing() {
                                 label="Title"
                                 prop="title"
                                 placeholder="Title"
+                                required
                                 value={titleSlideshow}
                                 onChange={(e) => setTitleSlideshow(e.target.value)}
                             />

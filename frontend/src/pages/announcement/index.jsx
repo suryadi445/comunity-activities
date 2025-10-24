@@ -129,7 +129,7 @@ const Announcements = () => {
     }, [refreshTrigger, typeFilter, search]);
 
     const handleSubmit = async () => {
-        if (!category || !title || !content || !startDate || !startTime) {
+        if (!category || !title || !content || !startDate || !startTime || !endDate || !endTime) {
             toastError("Please fill all required input.");
             return false;
         }
@@ -170,7 +170,7 @@ const Announcements = () => {
     };
 
     const handleSubmitEdit = async () => {
-        if (!category || !title || !content || !startDate || !startTime) {
+        if (!category || !title || !content || !startDate || !startTime || !endDate || !endTime) {
             toastError("Please fill all required input.");
             return false;
         }
@@ -317,12 +317,14 @@ const Announcements = () => {
                     <DatepickerLabel
                         label="End Date"
                         prop="end_date"
+                        required={true}
                         value={endDate}
                         onChange={(e) => setEndDate(formatDate(e))}
                     />
                     <InputLabel
                         label="End Time"
                         prop="end_time"
+                        required={true}
                         type="time"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
