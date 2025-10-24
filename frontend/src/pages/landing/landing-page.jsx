@@ -158,22 +158,7 @@ export default function Landing() {
             if (response.status === 200) {
                 toastSuccess("Update Slideshow Successfully");
                 setShowModalSlideshow(false);
-                const { leader, assistants } = response.response;
-
-                setLeaderTitle(leader.leader_title || "");
-                setLeaderName(leader.leader_name || "");
-                setLeaderPhone(leader.leader_phone || "");
-                setLeaderImage(leader.image || "");
-
-                // mapping assistants
-                setAssistants(
-                    assistants.map((a) => ({
-                        assistant: a.assistant_title || "",
-                        assistant_name: a.assistant_name || "",
-                        assistant_phone: a.assistant_phone || "",
-                        assistant_image: a.image || "",
-                    }))
-                );
+                fetchLandingData();
             }
         } catch (error) {
             toastError(error);
