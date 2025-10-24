@@ -12,6 +12,7 @@ const {
     editActivity,
     deleteActivityById,
     getAllImagesActivity,
+    getRowImagesActivityById,
     insertImagesActivity,
     deleteImagesActivityByImage,
 } = require("../models/activityModel.js");
@@ -73,9 +74,6 @@ const createActivity = async (req, res) => {
         const { title, activity_date, activity_time, description, location } = value;
         const created_by = req.user.id;
 
-        console.log(activity_time);
-
-
         const response = await insertActivity(title, activity_date, activity_time, description, location, created_by);
         return res.success(201, response);
     } catch (error) {
@@ -123,6 +121,19 @@ const getImagesActivity = async (req, res) => {
 
     try {
         const response = await getAllImagesActivity(limit, page);
+        return res.success(200, response);
+    } catch (error) {
+        console.error(error);
+        return res.error(500, error.message);
+    }
+};
+
+const getImagesActivityById = async (req, res) => {
+    const parsedUrl = url.parse(req.url, true);
+    const id = parsedUrl.query.id;
+
+    try {
+        const response = await getRowImagesActivityById(id);
         return res.success(200, response);
     } catch (error) {
         console.error(error);
@@ -238,6 +249,7 @@ module.exports = {
     updateActivity,
     deleteActivity,
     getImagesActivity,
+    getImagesActivityById,
     createImagesActivity,
     deleteImagesActivity
 };

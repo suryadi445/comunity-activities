@@ -168,6 +168,33 @@ const Actifity = {
         }
     },
 
+    async getRowImagesActivityById(id) {
+        try {
+            const result = await pool.query(
+                `SELECT
+                    a.id,
+                    a.title,
+                    TO_CHAR(a.activity_date, 'YYYY-MM-DD') AS activity_date,
+                    TO_CHAR(a.activity_time, 'HH24:MI') AS activity_time,
+                    a.description,
+                    a.location,
+                    MAX(ai.path) AS path,
+                    json_agg(ai.image) AS images
+                    FROM activity_images ai
+                    JOIN activities a ON ai.activity_id = a.id
+                    WHERE a.deleted_at IS NULL
+                    AND a.id = $1
+                    GROUP BY a.id, a.title;`,
+                [id]
+            );
+
+            return result.rows;
+        } catch (error) {
+            console.error("Error fetching images:", error);
+            throw error;
+        }
+    },
+
     async insertImagesActivity(activityId, images, uploadedBy = null) {
         try {
             const insertedImages = [];
