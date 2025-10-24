@@ -8,17 +8,26 @@ const InputComponent = ({ prop, type = "text", required = false, placeholder = "
 },
     onChange,
 }) => {
+    const handleChange = (e) => {
+        if (type === "number") {
+            const onlyNums = e.target.value.replace(/[^0-9]/g, ""); // hanya angka
+            onChange({ ...e, target: { ...e.target, value: onlyNums } });
+        } else {
+            onChange(e);
+        }
+    };
+
     return (
         <div>
             <TextInput
                 id={prop}
-                type={type}
+                type={type === "number" ? "text" : type}
                 name={prop}
                 value={value}
                 placeholder={placeholder}
                 required={required}
                 style={style}
-                onChange={onChange}
+                onChange={handleChange}
                 disabled={disabled}
             />
         </div>

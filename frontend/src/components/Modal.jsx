@@ -8,6 +8,7 @@ const Modal = ({
     onDecline,
     title = "",
     children,
+    modalFooter = true,
     size = "max-w-4xl",
 }) => {
     if (!isOpen) return null;
@@ -43,32 +44,33 @@ const Modal = ({
                     </div>
 
                     {/* Modal Footer */}
-                    <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                        <div className="ml-auto flex gap-2">
-                            <Button
-                                icon={HiOutlineSave}
-                                onClick={async () => {
-                                    const result = await onAccept?.();
-                                    if (result !== false) {
+                    {modalFooter && (
+                        <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                            <div className="ml-auto flex gap-2">
+                                <Button
+                                    icon={HiOutlineSave}
+                                    onClick={async () => {
+                                        const result = await onAccept?.();
+                                        if (result !== false) {
+                                            onClose();
+                                        }
+                                    }}
+                                >
+                                    Save
+                                </Button>
+                                <Button
+                                    icon={HiOutlineX}
+                                    color="light"
+                                    onClick={() => {
+                                        onDecline?.();
                                         onClose();
-                                    }
-                                }}
-                            >
-                                Save
-                            </Button>
-                            <Button
-                                icon={HiOutlineX}
-                                color="light"
-                                onClick={() => {
-                                    onDecline?.();
-                                    onClose();
-                                }}
-                            >
-                                Cancel
-                            </Button>
+                                    }}
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-
+                    )}
                 </div>
             </div>
         </div>
