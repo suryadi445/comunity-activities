@@ -83,14 +83,34 @@ const bodyParserMiddleware = (req, res, next) => {
 };
 
 const witheListToken = (req) => {
+    // const openRoutes = [
+    //     { url: "/api/auth/login", method: "POST" },
+    //     { url: "/api/auth/register", method: "POST" },
+    //     { url: "/api/auth/refresh-token", method: "POST" },
+    // ];
+
+    // return openRoutes.some(
+    //     (route) => req.url === route.url && req.method === route.method
+    // );
+
     const openRoutes = [
         { url: "/api/auth/login", method: "POST" },
         { url: "/api/auth/register", method: "POST" },
         { url: "/api/auth/refresh-token", method: "POST" },
+        { url: "/api/landing-page", method: "GET" },
+        { url: "/api/activities", method: "GET" },
+        { url: "/api/images-activity", method: "GET" },
+        { url: "/api/cash-reports", method: "GET" },
+        { url: "/api/settings-apps", method: "GET" },
+        { url: "/api/announcement", method: "GET" },
+        { url: "/api/cash-balance", method: "GET" },
+        { url: "/api/feedback", method: "POST" },
     ];
 
+    const pathname = new URL(req.url, `http://${req.headers.host}`).pathname;
+
     return openRoutes.some(
-        (route) => req.url === route.url && req.method === route.method
+        (route) => pathname.startsWith(route.url) && req.method === route.method
     );
 };
 

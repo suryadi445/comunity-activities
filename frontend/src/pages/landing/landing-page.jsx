@@ -851,7 +851,7 @@ export default function Landing() {
                         </h2>
                     </div>
                     <div className="mx-auto grid grid-cols-1 md:grid-cols-2 container mx-auto px-6 gap-8">
-                        <div className="flex flex-col items-center justify-start sticky top-0">
+                        <div className="lg:w-1/2 w-full text-center">
 
                             <div className="overflow-hidden whitespace-nowrap w-80 mt-4">
                                 <p className="animate-marquee text-indigo-700 font-semibold flex items-center space-x-6">
@@ -878,7 +878,7 @@ export default function Landing() {
                                 </p>
                             </div>
 
-                            <div className="relative mt-8 w-64 h-64 rounded-full bg-gradient-to-br from-white to-gray-200 shadow-2xl flex items-center justify-center border-8 border-gray-300">
+                            <div className="relative mt-8 w-64 h-64 rounded-full bg-gradient-to-br from-white to-gray-200 shadow-2xl flex items-center justify-center border-8 border-gray-300 mx-auto">
                                 {[...Array(12)].map((_, i) => {
                                     const angle = (i + 1) * 30;
                                     const x = 50 + 40 * Math.sin((angle * Math.PI) / 180);
@@ -886,7 +886,7 @@ export default function Landing() {
                                     return (
                                         <span
                                             key={i}
-                                            className="absolute text-sm font-bold text-gray-700"
+                                            className="absolute text-sm font-bold text-gray-100"
                                             style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%, -50%)" }}
                                         >
                                             {i + 1}
@@ -919,12 +919,12 @@ export default function Landing() {
                                 <div className="w-5 h-5 bg-gray-900 rounded-full absolute shadow-md"></div>
                             </div>
 
-                            <div className="mt-6 bg-white shadow-lg rounded-xl p-4 w-72">
+                            <div className="mt-6 bg-white shadow-lg rounded-xl p-4">
                                 <h4 className="text-center text-indigo-700 font-semibold mb-3">
                                     🕋 Jadwal Salat
                                 </h4>
 
-                                <ul className="text-gray-700 text-sm space-y-1">
+                                <ul className="text-gray-100 text-sm space-y-1">
                                     <>
                                         {prayerTimes && Object.keys(prayerTimes).length > 0 ? (
                                             <>
@@ -933,7 +933,7 @@ export default function Landing() {
                                                         ⏳ {countdown} menuju <b>{nextPrayer}</b>
                                                     </p>
                                                 )}
-                                                <ul className="text-gray-700 text-sm space-y-1">
+                                                <ul className="text-gray-100 text-sm space-y-1">
                                                     {Object.entries(prayerTimes).map(([name, time]) => (
                                                         <li
                                                             key={name}
@@ -956,7 +956,7 @@ export default function Landing() {
 
                         </div>
 
-                        <div className="space-y-8">
+                        <div className="lg:w-1/2 w-full">
                             {announcements.map((announcement, index) => (
                                 <div
                                     key={index}
@@ -1009,7 +1009,7 @@ export default function Landing() {
                                         })}`}
                                         &nbsp;({announcement.end_time})
                                     </p>
-                                    <p className="text-gray-700 mt-4 leading-relaxed">
+                                    <p className="text-gray-100 mt-4 leading-relaxed">
                                         {announcement.content}
                                     </p>
                                 </div>
@@ -1030,7 +1030,7 @@ export default function Landing() {
                                     >
                                         <HiIcons.HiChevronLeft className="w-5 h-5" />
                                     </button>
-                                    <span className="text-lg font-semibold text-gray-700">
+                                    <span className="text-lg font-semibold text-gray-100">
                                         Page {announcementPage} of {totalAnnouncementPages}
                                     </span>
                                     <button
